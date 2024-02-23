@@ -1,0 +1,111 @@
+C51 COMPILER V9.01   MAIN                                                                  11/06/2023 18:39:30 PAGE 1   
+
+
+C51 COMPILER V9.01, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE main.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          sbit K1=P3^1;
+   3          sbit K2=P3^0;
+   4          sbit K3=P3^2;
+   5          sbit K4=P3^3;
+   6          void Delay(unsigned char xms)
+   7          {
+   8   1              unsigned char i,j;
+   9   1              while(xms--)
+  10   1              {
+  11   2                      for(i=0,j=123;i<j;i++);
+  12   2      
+  13   2              }
+  14   1      }
+  15          
+  16          void main()
+  17          {
+  18   1      
+  19   1              unsigned char number;
+  20   1              unsigned char password = 2;
+  21   1              //设置密码为2，即按下K3，密码正确
+  22   1              while(1)
+  23   1              {
+  24   2              //给它一个初始值帮助数码管保持——
+  25   2                      number=5;
+  26   2                      P0=0x40;
+  27   2              
+  28   2                      P3=0xff;
+  29   2                      P2 = 0xff;
+  30   2                      //锁存
+  31   2      
+  32   2                      //if判断，为各个按键赋予相对应的值
+  33   2                      if(K1==0)
+  34   2                      {
+  35   3                              Delay(10);
+  36   3                              number=0;
+  37   3                      
+  38   3                      }
+  39   2                      else if(K2==0)
+  40   2                      {
+  41   3                              Delay(10);
+  42   3                              number=1;
+  43   3                      }
+  44   2                      else if(K3==0)
+  45   2                      {
+  46   3                              Delay(10);
+  47   3                              number=2;
+  48   3                      }
+  49   2                      else if(K4==0)
+  50   2                      {
+  51   3                              Delay(10);
+  52   3                              number=3;
+  53   3                      }
+  54   2      
+  55   2                      //说明按键没按下，number还是初始值
+C51 COMPILER V9.01   MAIN                                                                  11/06/2023 18:39:30 PAGE 2   
+
+  56   2                      if(number==5){
+  57   3                              P0=0x40;
+  58   3                              Delay(1);
+  59   3                              P2=0xff;
+  60   3                      
+  61   3                      
+  62   3                      }
+  63   2      
+  64   2                      //一旦密码正确则数码管立刻显示P，P2^0点亮
+  65   2                      else if(number==password)
+  66   2                      {
+  67   3                              P0=0x73;
+  68   3                              Delay(1);
+  69   3              
+  70   3                              P2 = 0x7f;
+  71   3                              
+  72   3                      }
+  73   2      
+  74   2                      //如果按下其他按键。则密码错误，数码管显示E，P2^0不亮
+  75   2                      else if(number==0||number==1||number==3)  
+  76   2                      {
+  77   3                              P0=0x79;
+  78   3                              Delay(1);
+  79   3                              P2=0xff;
+  80   3                      
+  81   3                      }
+  82   2                      //按键一旦再按下，再次循环
+  83   2                      while(P3==0xff);
+  84   2              }
+  85   1      
+  86   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    131    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
